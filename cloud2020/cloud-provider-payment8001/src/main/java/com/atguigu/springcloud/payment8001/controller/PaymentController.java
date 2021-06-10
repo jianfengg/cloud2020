@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description:
@@ -44,10 +45,21 @@ public class PaymentController {
 
     @GetMapping("/get/{id}")
     public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
+        log.info("当前线程,{}", Thread.currentThread());
         log.info("根据ID获取数据");
         Payment payment = paymentService.getPaymentById(id);
         CommonResult<Payment> commonResult = new CommonResult<>(ResultConstants.ResultCode.SUCCESS_CODE, "访问port: " + serverPort + " 数据：" + payment);
         log.info(commonResult.toString());
         return commonResult;
+    }
+
+    @GetMapping("/testTimeOut")
+    public CommonResult<String> testTimeOut() {
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            log.error("异常",e);
+        }
+        return new CommonResult<>(serverPort);
     }
 }

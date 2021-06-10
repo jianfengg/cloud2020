@@ -12,5 +12,8 @@ eureka:
     service-url:
 #      defaultZone: http://10.24.164.35:7001/eureka
       defaultZone: http://eureka7001.com:7001/eureka/, http://eureka7002.com:7002/eureka/
-
-
+  instance:
+    #实例名称
+    instance-id: cloud-consumer-order80
+    #是否显示ip
+    prefer-ip-address: true

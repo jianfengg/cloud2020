@@ -23,6 +23,11 @@ public class CommonResult<T> implements Serializable {
 
     private T data;
 
+    public CommonResult(T data) {
+        this.code = ResultConstants.ResultCode.SUCCESS_CODE;
+        this.data = data;
+    }
+
     public CommonResult(Integer code, T data) {
         this.code = code;
         this.data = data;
