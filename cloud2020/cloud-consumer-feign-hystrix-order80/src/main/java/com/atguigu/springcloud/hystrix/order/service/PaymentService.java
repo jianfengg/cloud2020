@@ -2,6 +2,7 @@ package com.atguigu.springcloud.hystrix.order.service;
 
 import com.atguigu.springcloud.common.common.CommonResult;
 import com.atguigu.springcloud.common.entity.payment.Payment;
+import com.atguigu.springcloud.hystrix.order.service.impl.PaymentHystrixServiceImpl;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,5 +26,9 @@ public interface PaymentService {
 
     @GetMapping("/payment/get/{id}")
     CommonResult<Payment> getPaymentById(@PathVariable("id") Long id);
+
+
+    @GetMapping("/payment/testTimeOut")
+    CommonResult<String> testTimeOut();
 
 }
