@@ -1,16 +1,16 @@
-package com.atguigu.springcloud.payment8002.controller;
+package com.spring.test.controller;
 
 import com.atguigu.springcloud.common.common.CommonResult;
 import com.atguigu.springcloud.common.constants.ResultConstants;
-import com.atguigu.springcloud.payment8002.entity.Payment;
-import com.atguigu.springcloud.payment8002.service.PaymentService;
-import org.aspectj.lang.annotation.Aspect;
+import com.spring.test.entity.Payment;
+import com.spring.test.service.PaymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description:
@@ -26,7 +26,6 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/payment")
-@Aspect
 public class PaymentController {
 
     private static final Logger log = LoggerFactory.getLogger(PaymentController.class);
@@ -48,8 +47,23 @@ public class PaymentController {
     public CommonResult<Payment> getPaymentById(@PathVariable("id") Long id) {
         log.info("根据ID获取数据");
         Payment payment = paymentService.getPaymentById(id);
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            log.error("异常", e);
+        }
         CommonResult<Payment> commonResult = new CommonResult<>(ResultConstants.ResultCode.SUCCESS_CODE, "访问port: " + serverPort + " 数据：" + payment);
         log.info(commonResult.toString());
         return commonResult;
+    }
+
+    @GetMapping("/testTimeOut")
+    public CommonResult<String> testTimeOut() {
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            log.error("异常",e);
+        }
+        return new CommonResult<>(serverPort);
     }
 }
